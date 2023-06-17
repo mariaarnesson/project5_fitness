@@ -1,0 +1,10 @@
+<h1> Yoga Exercises </h1>
+<ul>
+    {% for exercise in exercises %}
+   
+    <li>
+        <p>{{ exercise.name }}</p>
+        <img src="{{ exercise.featured_image.url }}" alt="{{ exercise.name}}">
+    </li>
+    {% endfor %}
+</ul>

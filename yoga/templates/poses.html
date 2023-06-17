@@ -1,11 +1,12 @@
 <h1>Yoga Poses</h1>
-<ul>
-    {% for pose in yoga_poses %}
-    <li>
-        {{ pose.name }}
-        <form action="{% url 'day_exercises' yoga_day_id=pose.id %}" method="GET">
-            <button type="submit"> View Exercises </button>
-        </form>
-    </li>
+
+    {% for pose in poses %}
+    
+        
+        <h1>{{ pose.name }}</h1>
+        <a href="{% url 'exercises' pose.id %}">
+            <img src="{{ pose.featured_image.url }}" alt="{{ pose.name }}">
+        </a>
+      
+    
     {% endfor %}
-</ul>
