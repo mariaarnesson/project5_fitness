@@ -15,16 +15,19 @@
             <div class="card" style="border-radius: 1rem;">
               <div class="row g-0">
                 <div class="col-md-6 col-lg-5 d-none d-md-block">
+                  
                     <img src="{{ exercise.featured_image.url }}" alt="{{ exercise.name}}" class="img-fluid" style="border-radius: 1rem 0 0 1rem;">
                 </div>
                 <div class="col-md-6 col-lg-7 d-flex align-items-center">
                 <div class="card-body p-4 p-lg-5 text-black">
-                    <input type="checkbox" id="exercise_{{ exercise.id }}" name="exercise_{{ exercise.id }}" {% if exercise.completed %}disabled{% endif %}>
-                    <label for="exercise_{{ exercise.id }}">
+                   
         <h1>{{ exercise.name }}</h1>
         <h2> {{ exercise.original_name }} </h2>
         <h3> {{ exercise.level }} </h3>
         <p> {{ exercise.description }} </p>
+        
+        <input type="checkbox" id="exercise_{{ exercise.id }}" name="exercise_{{ exercise.id }}" {% if exercise.completed %}disabled{% endif %}>
+        <label for="exercise_{{ exercise.id }}">
         {% if exercise.completed %}
           (Completed)
         {% endif %}
