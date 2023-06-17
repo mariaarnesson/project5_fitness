@@ -1,0 +1,11 @@
+<h1>Yoga Poses</h1>
+<ul>
+    {% for pose in yoga_poses %}
+    <li>
+        {{ pose.name }}
+        <form action="{% url 'day_exercises' yoga_day_id=pose.id %}" method="GET">
+            <button type="submit"> View Exercises </button>
+        </form>
+    </li>
+    {% endfor %}
+</ul>

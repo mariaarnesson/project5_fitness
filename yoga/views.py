@@ -1,6 +1,7 @@
-from django.shortcuts import render
+from django.views.generic import ListView
+from .models import YogaExercise
 
-
-def yoga(request):
-
-    return render(request, 'yoga.html')
+class PoseListView(ListView):
+    model = YogaExercise
+    template_name = 'pose_list.html'
+    context_object_name = 'yoga_exercises'

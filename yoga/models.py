@@ -26,7 +26,7 @@ class YogaExercise(models.Model):
 
 class YogaDay(models.Model):
     quantity = models.PositiveIntegerField()
-    yoga_exercise = models.ForeignKey('YogaExercise', on_delete=models.CASCADE)
+    yoga_exercises = models.ManyToManyField('YogaExercise')
 
     def __str__(self):
         return f"YogaDay {self.pk}"
