@@ -1,0 +1,11 @@
+<h1>User Profile</h1>
+<p>{{ request.user.username }} - {{ exercises_completed.count }} exercises completed</p>
+
+<h2>Completed Exercises:</h2>
+<ul>
+  {% for exercise in exercises_completed %}
+    <li>{{ exercise.name }}</li>
+  {% empty %}
+    <li>No exercises completed yet.</li>
+  {% endfor %}
+</ul>

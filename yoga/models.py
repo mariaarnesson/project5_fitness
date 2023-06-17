@@ -38,5 +38,11 @@ class YogaWorkout(models.Model):
     yoga_exercises = models.ManyToManyField(YogaExercise)
     date = models.DateTimeField(auto_now_add=True)
 
+    def save(self, *args, **kvargs):
+        super().save(*args, **kvargs)
+        user_profile, created = UserProfile.objects.get_or_create(user=self.user)
+        user_profile.exercises_completed.set(self.yoga_exercises.all())
+        user_profile.save()
+
     def __str__(self):
         return f"YogaWorkout {self.pk}"

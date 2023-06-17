@@ -19,11 +19,16 @@
                 </div>
                 <div class="col-md-6 col-lg-7 d-flex align-items-center">
                 <div class="card-body p-4 p-lg-5 text-black">
-    
+                    <input type="checkbox" id="exercise_{{ exercise.id }}" name="exercise_{{ exercise.id }}" {% if exercise.completed %}disabled{% endif %}>
+                    <label for="exercise_{{ exercise.id }}">
         <h1>{{ exercise.name }}</h1>
         <h2> {{ exercise.original_name }} </h2>
         <h3> {{ exercise.level }} </h3>
         <p> {{ exercise.description }} </p>
+        {% if exercise.completed %}
+          (Completed)
+        {% endif %}
+      </label>
     </div>      
 </div>
 </div>
