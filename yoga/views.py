@@ -2,7 +2,6 @@ from django.shortcuts import render, get_object_or_404
 from .models import YogaPoses, YogaExercise
 
 
-
 def poses_view(request):
     poses = YogaPoses.objects.all()
     return render(request, 'poses.html', {'poses': poses})

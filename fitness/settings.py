@@ -48,6 +48,7 @@ INSTALLED_APPS = [
     'home',
     'yoga',
     'profiles',
+    'reservation',
 ]
 
 MIDDLEWARE = [

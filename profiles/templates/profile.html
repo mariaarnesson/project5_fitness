@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load cloudinary %}
 {% load static %}
 
 {% block head %}
@@ -11,7 +12,7 @@
 
 <h2>Profile Photo</h2>
 
-<img src="{{ user_profile.photo.url }}" alt="Profile Photo">
+<img src="{{ user_profile.photo.url }}" alt="Profile Photo" style="width: 150px;">
 
 
 <h2>Completed Exercises</h2>
