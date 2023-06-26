@@ -1,3 +1,6 @@
 from django.contrib import admin
+from .models import No_of_guest, OnlineBooking
 
-# Register your models here.
+
+admin.site.register(No_of_guest)
+admin.site.register(OnlineBooking)
