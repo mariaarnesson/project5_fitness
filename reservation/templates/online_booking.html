@@ -2,12 +2,10 @@
 {% load static %}
 
 {% block head %}
-<title> Online Booking </title>
+<title>Online Booking</title>
 {% endblock %}
 
 {% block body %}
-
-
 <section class="v-100">
   <div class="container-fluid h-custom">
     <div class="row d-flex justify-content-center align-items-center h-100">
@@ -16,26 +14,15 @@
           class="img-fluid" alt="Sample image">
       </div>
       <div class="col-md-8 col-lg-6 col-xl-4 offset-xl-1">
-        <form method='post' action="{% url 'online_booking' %}">
-                      
+        <form method="post" action="{% url 'mybookings' %}">
+          {% csrf_token %}
           <span class="h1 fw-bold mb-0">Le chere</span>
-       
-        <h5 class="fw-normal mb-3 pb-3" style="letter-spacing: 1px;">Book a table</h5>
-       
-        {% csrf_token %}
-        {{ form.as_p }}
-   
-          
-            <button class="btn btn-primary" type="submit">Add reservation</button>
-          
-         
-      </form>
+          <h5 class="fw-normal mb-3 pb-3" style="letter-spacing: 1px;">Book a table</h5>
+          {{ form.as_p }}
+          <button class="btn btn-primary" type="submit">Add reservation</button>
+        </form>
       </div>
     </div>
   </div>
-  
 </section>
-
-                   
-                  
-{%endblock%}
+{% endblock %}

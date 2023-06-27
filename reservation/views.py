@@ -5,10 +5,20 @@ from .models import OnlineBooking
 from .forms import OnlineBookingForm
 from datetime import date
 from django.contrib import messages
+from django.views import View
+
+
+class HomeView(View):
+    def get(self, request):
+        return render(request, 'home.html', {})
 
 
 def reservation(request):
     return render(request, 'reservation.html')
+
+
+def menu(request):
+    return render(request, 'menu.html')
 
 
 @login_required    
@@ -48,30 +58,38 @@ def mybookings(request):
     }
     return render(request, 'mybookings.html', context)
 
-
 @login_required
-def edit_booking(request, online_booking_id):
+def edit_booking(request, booking_id):
+    booking = get_object_or_404(OnlineBooking, id=booking_id, user=request.user)
 
-    online_booking = get_object_or_404(OnlineBooking, id=online_booking_id)
     if request.method == 'POST':
-        form = OnlineBookingForm(request.POST, instance=online_booking)
+        form = OnlineBookingForm(request.POST, instance=booking)
+
         if form.is_valid():
             form.save()
-            messages.success(request, 'Your booking has been edited.')
+            messages.success(request, 'Booking updated successfully.')
             return redirect('mybookings')
-        else:
-            messages.error(request, 'This reservation is already booked.')
+    else:
+        form = OnlineBookingForm(instance=booking)
 
-    form = OnlineBookingForm(instance=online_booking)
     context = {
         'form': form,
-    }         
+    }
     return render(request, 'edit_booking.html', context)
 
 
+from django.contrib import messages
+
 @login_required
-def delete_booking(request, online_booking_id):
-    online_booking = get_object_or_404(OnlineBooking, online_booking_id)
-    online_booking.delete()
-    messages.success(request, 'Reservation is now deleted.')
-    return redirect('mybookings')    
+def delete_booking(request, booking_id):
+    booking = get_object_or_404(OnlineBooking, id=booking_id, user=request.user)
+
+    if request.method == 'POST':
+        booking.delete()
+        messages.success(request, 'Booking deleted successfully.')
+        return redirect('mybookings')
+
+    context = {
+        'booking': booking,
+    }
+    return render(request, 'delete_booking.html', context)

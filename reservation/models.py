@@ -3,6 +3,9 @@ from django.contrib.auth.models import User
 import datetime
 
 
+STATUS = ((0, "Draft"), (1, "Published"))
+
+
 class No_of_guest(models.Model):
     guest = models.IntegerField(null=False, blank=False)
 
@@ -41,8 +44,10 @@ class OnlineBooking(models.Model):
     time = models.CharField(null=True, blank=False, choices=TIME_CHOICES, max_length=60)
     occassion = models.CharField(max_length=150, choices=OCCASSION_CHOICES, default="Birthday")
     special_request = models.TextField(max_length=300, blank=True)
+    approved = models.BooleanField(default=False)
 
     class Meta:
+
         unique_together = ["no_of_guest", "date", "time"]
 
     def __str__(self):
