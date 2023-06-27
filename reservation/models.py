@@ -36,6 +36,13 @@ class OnlineBooking(models.Model):
         ("Other", "Other"),
         ]
 
+    TABLE_CHOICES = (
+        ("Family table", "Family table"),
+        ("Outdoor seating", "Outdoor seating"),
+        ("Table for two", "Table for two"),
+        ("Table on second floor (sea view)", "Table on second floor (sea view)")
+        )
+
     user = models.ForeignKey(
         User, on_delete=models.CASCADE, related_name='restaurant_booking'
     )
@@ -43,6 +50,7 @@ class OnlineBooking(models.Model):
     date = models.DateField(null=False, blank=False)
     time = models.CharField(null=True, blank=False, choices=TIME_CHOICES, max_length=60)
     occassion = models.CharField(max_length=150, choices=OCCASSION_CHOICES, default="Birthday")
+    table = models.CharField(max_length=150, choices=TABLE_CHOICES, default="Family table")
     special_request = models.TextField(max_length=300, blank=True)
     approved = models.BooleanField(default=False)
 

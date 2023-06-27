@@ -6,37 +6,7 @@
 {% endblock %}
 
 {% block body %}
-<!-- Rest of your template -->
 
-<!-- Display success messages -->
-{% if messages %}
-  {% for message in messages %}
-    <div class="alert alert-success" role="alert">
-      {{ message }}
-    </div>
-  {% endfor %}
-{% endif %}
-
-<!-- Display error messages -->
-{% if form.errors %}
-  {% for field in form %}
-    {% if field.errors %}
-      {% for error in field.errors %}
-        <div class="alert alert-danger" role="alert">
-          {{ error }}
-        </div>
-      {% endfor %}
-    {% endif %}
-  {% endfor %}
-{% endif %}
-
-{% if booking.date < request.timezone.now.date %}
-  <div class="alert alert-danger" role="alert">
-    Cannot edit past bookings.
-  </div>
-{% endif %}
-
-<!-- Rest of your template -->
 
 <section class="v-100">
   <div class="container-fluid h-custom">
@@ -48,6 +18,13 @@
       <div class="col-md-8 col-lg-6 col-xl-4 offset-xl-1">
         <form method="post">
           {% csrf_token %}
+          {% if messages %}
+          <ul class="messages">
+            {% for message in messages %}
+            <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+            {% endfor %}
+          </ul>
+          {% endif %}
           <span class="h1 fw-bold mb-0">Edit Booking</span>
           <h5 class="fw-normal mb-3 pb-3" style="letter-spacing: 1px;">Update your reservation</h5>
           {{ form.as_p }}
