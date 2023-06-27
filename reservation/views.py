@@ -70,11 +70,16 @@ def mybookings(request):
 def edit_booking(request, booking_id):
     booking = get_object_or_404(OnlineBooking, id=booking_id, user=request.user)
 
+    if booking.date < date.today():
+        messages.error(request, 'Cannot edit past bookings.')
+        return redirect('mybookings')
+
     if request.method == 'POST':
         form = OnlineBookingForm(request.POST, instance=booking)
 
         if form.is_valid():
             form.save()
+
             messages.success(request, 'Booking updated successfully.')
             return redirect('mybookings')
     else:

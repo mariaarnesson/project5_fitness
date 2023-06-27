@@ -6,6 +6,38 @@
 {% endblock %}
 
 {% block body %}
+<!-- Rest of your template -->
+
+<!-- Display success messages -->
+{% if messages %}
+  {% for message in messages %}
+    <div class="alert alert-success" role="alert">
+      {{ message }}
+    </div>
+  {% endfor %}
+{% endif %}
+
+<!-- Display error messages -->
+{% if form.errors %}
+  {% for field in form %}
+    {% if field.errors %}
+      {% for error in field.errors %}
+        <div class="alert alert-danger" role="alert">
+          {{ error }}
+        </div>
+      {% endfor %}
+    {% endif %}
+  {% endfor %}
+{% endif %}
+
+{% if booking.date < request.timezone.now.date %}
+  <div class="alert alert-danger" role="alert">
+    Cannot edit past bookings.
+  </div>
+{% endif %}
+
+<!-- Rest of your template -->
+
 <section class="v-100">
   <div class="container-fluid h-custom">
     <div class="row d-flex justify-content-center align-items-center h-100">
