@@ -29,30 +29,38 @@ def online_booking(request):
 
         if form.is_valid():
             reservation = form.save(commit=False)
+
+             # Check if the selected date is in the past
+            if reservation.date < date.today():
+                messages.error(request, 'You cannot book a table for a past date.')
+                return redirect('online_booking')
+
             reservation.user = request.user
+            reservation.approved = False
             reservation.save()
             messages.success(
-                request, 'Reservation request submitted succesfully.You can check you reservation at: My bookings'
-                )
+                request, 'Reservation request submitted successfully. Your booking is pending approval.'
+            )
+            return redirect('mybookings')
         else:
             messages.error(request, 'The table is already booked.')
-            reservation = form.instance.date
+    else:
+        form = OnlineBookingForm()
 
-    form = OnlineBookingForm()
     context = {
         'form': form,
     }
-    return render(request, 'online_booking.html', context)
+    return render(request, 'online_booking.html', context)        
 
 
 @login_required
 def mybookings(request):
     try:
-        online_bookings = get_list_or_404(OnlineBooking, user=request.user)
+        online_bookings = get_list_or_404(OnlineBooking, user=request.user, approved=True)
     except Exception:
         online_bookings = None
 
-    form = OnlineBookingForm()
+ #   form = OnlineBookingForm()
     context = {
         'online_bookings': online_bookings,
     }
@@ -78,7 +86,7 @@ def edit_booking(request, booking_id):
     return render(request, 'edit_booking.html', context)
 
 
-from django.contrib import messages
+
 
 @login_required
 def delete_booking(request, booking_id):

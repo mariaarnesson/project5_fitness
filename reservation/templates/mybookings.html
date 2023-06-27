@@ -6,50 +6,73 @@
 {% endblock %}
 
 {% block body %}
+
 <section class="v-100 gradient-custom">
   <div class="container py-5 h-100">
     <div class="row d-flex align-items-center h-100">
       <div class="col-12 col-md-8 col-lg-6 col-xl-5 offset-lg-2">
         <div class="jumbotron jumbo-height">
-          <h1 class="display-4">My Bookings:</h1>
+              <!-- Display success messages -->
+              {% if messages %}
+              {% for message in messages %}
+                <div class="alert alert-success" role="alert">
+                  {{ message }}
+                </div>
+              {% endfor %}
+            {% endif %}
+  
+            <!-- Display error messages -->
+            {% if form.errors %}
+              {% for field in form %}
+                {% if field.errors %}
+                  {% for error in field.errors %}
+                    <div class="alert alert-danger" role="alert">
+                      {{ error }}
+                    </div>
+                  {% endfor %}
+                {% endif %}
+              {% endfor %}
+            {% endif %}
+          <h1 class="display-4">My Bookings</h1>
           <p>Edit or delete your bookings.</p>
           <hr class="my-4">
-          <!-- Displays all the reservations of the user -->
           {% if online_bookings %}
             {% for booking in online_bookings %}
-              <div class="accordion" id="accordionExample">
-                <div class="card bg-dark text-white" style="border-radius: 1rem; margin: 3em;">
-                  <div>
-                    <div class="card-body">
-                      <p class="text-white">
-                        <i class="fa-solid fa-location-dot" style="color: #d7dae0;"></i>
-                        Restaurant Le Chere
-                      </p>
-                      <p class="text-white">
-                        <i class="fa-solid fa-calendar-days" style="color: #e4e7ec;"></i>
-                        {{ booking.date }} at {{ booking.time }}
-                      </p>
-                      <p class="text-white">
-                        <i class="fa-solid fa-person" style="color: #cdd0d6;"></i>
-                        {{ booking.no_of_guest.guest }} guest(s)
-                      </p>
-                      <p class="text-white">
-                        {{ booking.occassion }}
-                      </p>
-                      <p class="text-white">
-                        {{ booking.special_request }}
-                      </p>
-                      <p>Ordering's number: {{ booking.id }}</p>
-                      <!-- Add the buttons for editing and deleting -->
-                      {% if booking.user == request.user or request.user.is_superuser %}
-                        <button type="button" class="btn btn-secondary btn-sm">
-                          <a class="btn btn-secondary" href="{% url 'edit_booking' booking.id %}">Edit Booking</a>
-                        </button>
-                        <button type="button" class="btn btn-danger btn-sm">
-                          <a class="btn btn-danger" href="{% url 'delete_booking' booking.id %}">Delete Booking</a>
-                        </button>
-                      {% endif %}
-                    </div>
+              <div class="card bg-dark text-white" style="border-radius: 1rem; margin: 3em;">
+                <div>
+                  <div class="card-body">
+                    <p class="text-white">
+                      <i class="fa-solid fa-location-dot" style="color: #d7dae0;"></i>
+                      Restaurant Le Chere
+                    </p>
+                    <p class="text-white">
+                      <i class="fa-solid fa-calendar-days" style="color: #e4e7ec;"></i>
+                      {{ booking.date }} at {{ booking.time }}
+                    </p>
+                    <p class="text-white">
+                      <i class="fa-solid fa-person" style="color: #cdd0d6;"></i>
+                      {{ booking.no_of_guest.guest }} guest(s)
+                    </p>
+                    <p class="text-white">
+                      {{ booking.occassion }}
+                    </p>
+                    <p class="text-white">
+                      {{ booking.special_request }}
+                    </p>
+                    <p>Ordering's number: {{ booking.id }}</p>
+
+                    {% if booking.approved %}
+                      <p>Booking Status: Approved</p>
+                    {% else %}
+                      <p>Booking Status: Pending Approval</p>
+                    {% endif %}
+
+                    <button type="button" class="btn btn-secondary btn-sm">
+                      <a class="btn btn-secondary" href="{% url 'edit_booking' booking.id %}">Edit Booking</a>
+                    </button>
+                    <button type="button" class="btn btn-danger btn-sm">
+                      <a class="btn btn-danger" href="{% url 'delete_booking' booking.id %}">Delete Booking</a>
+                    </button>
                   </div>
                 </div>
               </div>
