@@ -1,5 +1,5 @@
 from django import forms
-from .models import OnlineBooking
+from .models import OnlineBooking, ContactDetails
 
 
 class OnlineBookingForm(forms.ModelForm):
@@ -10,3 +10,9 @@ class OnlineBookingForm(forms.ModelForm):
         widgets = {
             'date': forms.widgets.DateInput(attrs={'type': 'date'})
         }
+
+
+class ContactForm(forms.ModelForm):
+    class Meta:
+        model = ContactDetails
+        fields = ['name', 'email', 'phone', 'adress']

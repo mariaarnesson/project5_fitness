@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.views import View
 from .models import OnlineBooking
-from .forms import OnlineBookingForm
+from .forms import OnlineBookingForm, ContactForm
 from datetime import date
 from django.contrib import messages
 
@@ -81,14 +81,29 @@ class OnlineBookingView(View):
             return render(request, 'online_booking.html', context)
 
 
-class MyBookingsView(View):
-
+class ContactDetailsView(View):
     def get(self, request):
-        online_bookings = OnlineBooking.objects.filter(user=request.user)
+        contact_form = ContactForm()
         context = {
-            'online_bookings': online_bookings,
+            'contact_form': contact_form,
         }
-        return render(request, 'mybookings.html', context)
+        return render(request, 'contact_details.html', context)
+
+    def post(self, request):
+        contact_form = ContactForm(request.POST)
+
+        if contact_form.is_valid():
+            # Save the contact details form
+            contact_details = contact_form.save()
+            # Redirect to the mybookings page or any other desired page
+            return redirect('mybookings')
+        else:
+            messages.error(request, 'Invalid form data.')
+
+        context = {
+            'contact_form': contact_form,
+        }
+        return render(request, 'contact_details.html', context)
 
 
 class EditBookingView(View):

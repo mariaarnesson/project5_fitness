@@ -60,3 +60,16 @@ class OnlineBooking(models.Model):
 
     def __str__(self):
         return f'{self.date}'
+
+
+class ContactDetails(models.Model):
+    name = models.CharField(max_length=20, unique=True)
+    email = models.EmailField(blank=True)
+    phone = models.CharField(max_length=256, blank=True)
+    address = models.CharField(max_length=256, blank=True)
+    online_booking = models.ForeignKey(
+        OnlineBooking, on_delete=models.CASCADE, related_name='restaurant_booking'
+    )
+   
+    def __str__(self):
+        return str(self.name)
