@@ -49,6 +49,7 @@ INSTALLED_APPS = [
     'yoga',
     'profiles',
     'reservation',
+    'crispy_forms',
 ]
 
 MIDDLEWARE = [

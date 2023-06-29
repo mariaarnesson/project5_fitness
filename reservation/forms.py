@@ -15,4 +15,4 @@ class OnlineBookingForm(forms.ModelForm):
 class ContactForm(forms.ModelForm):
     class Meta:
         model = ContactDetails
-        fields = ['name', 'email', 'phone', 'adress']
+        fields = ['name', 'email']

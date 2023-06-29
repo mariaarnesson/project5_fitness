@@ -64,7 +64,10 @@
                       {{ booking.special_request }}
                     </p>
                     <p>Ordering's number: {{ booking.id }}</p>
-
+                   
+                    <p class="text-white">
+                      {{ contact.name }}
+                    </p>
                     {% if booking.approved %}
                       <p>Booking Status: Approved</p>
                     {% else %}
@@ -83,6 +86,7 @@
               </div>
             {% endfor %}
           {% else %}
+         
             <div class="row">
               <div class="col text-center pt-5">
                 <div class="card pt-5 pb-5">

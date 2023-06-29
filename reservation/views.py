@@ -34,7 +34,6 @@ class MyBookingsView(View):
             }
             return render(request, 'mybookings.html', context)
         else:
-            # Handle the case when the user is not logged in
             messages.error(request, 'You need to log in to view your bookings.')
             return redirect('login')
 
@@ -68,6 +67,7 @@ class OnlineBookingView(View):
                 reservation.user = request.user
                 reservation.approved = False
                 reservation.save()
+                request.session['online_booking_id'] = reservation.id
                 messages.success(request, 'Reservation request submitted successfully. Your booking is pending approval.')
                 return redirect('mybookings')
             else:
@@ -79,31 +79,6 @@ class OnlineBookingView(View):
                 'form': form,
             }
             return render(request, 'online_booking.html', context)
-
-
-class ContactDetailsView(View):
-    def get(self, request):
-        contact_form = ContactForm()
-        context = {
-            'contact_form': contact_form,
-        }
-        return render(request, 'contact_details.html', context)
-
-    def post(self, request):
-        contact_form = ContactForm(request.POST)
-
-        if contact_form.is_valid():
-            # Save the contact details form
-            contact_details = contact_form.save()
-            # Redirect to the mybookings page or any other desired page
-            return redirect('mybookings')
-        else:
-            messages.error(request, 'Invalid form data.')
-
-        context = {
-            'contact_form': contact_form,
-        }
-        return render(request, 'contact_details.html', context)
 
 
 class EditBookingView(View):
